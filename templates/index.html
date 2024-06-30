@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiabeticBot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 500px; /* Increased max height for more content */
+        }
+
+        .chat-slider {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .chat-message {
+            margin-bottom: 20px;
+        }
+
+        .chat-message.question {
+            text-align: right;
+        }
+
+        .chat-message.answer {
+            text-align: left;
+        }
+
+        .chat-message p {
+            padding: 10px;
+            border-radius: 20px;
+            background-color: #f9f9f9; /* Light gray background */
+            display: inline-block;
+            max-width: 70%;
+        }
+
+        .chat-message.question p {
+            background-color: #ddf5ed; /* Light green background for questions */
+        }
+
+        .chat-message.answer p {
+            background-color: #f0f5ff; /* Light blue background for answers */
+        }
+
+        .chat-message.context p {
+            background-color: #f9f9f9; /* Light gray background */
+            font-style: italic;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 100px); /* Adjusted width */
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #2F8D46;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #246c37;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2F8D46;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chat-container">
+        <h1>DiabeticBot</h1>
+        <div class="chat-slider">
+            {% for previous_question in previous_questions %}
+            <div class="chat-message question">
+                <p>{{ previous_question }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if question %}
+        <div class="chat-message question">
+            <p>{{ question }}</p>
+        </div>
+        {% endif %}
+
+        {% if answer %}
+        <div class="chat-message answer">
+            <p>{{ answer }}</p>
+        </div>
+        {% endif %}
+
+        {% if context %}
+        <div class="chat-message context">
+            <p>{{ context }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Form -->
+        <form action="/answer" method="post">
+            <input type="text" id="question" name="question" placeholder="Type your question here..." required><br>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+
+</html>
